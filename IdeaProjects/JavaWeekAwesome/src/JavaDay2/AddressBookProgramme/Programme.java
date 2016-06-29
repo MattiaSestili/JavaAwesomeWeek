@@ -1,6 +1,7 @@
 package JavaDay2.AddressBookProgramme;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -32,52 +33,17 @@ public class Programme {
             switch (choice)
             {
                 case 1:
-                    getDetails();
+                    getDetails(inputScreen());
                     break;
-                case 2;
+                case 2:
                     editContact();
                     break;
 
             }
     }
-
-    static void addContact()
+    static Contact inputScreen()
     {
-        String firstName, lastName, address, email, phoneNumber;
-
-        getDetails();
-
-        book.addNewContact(firstName, lastName,
-                new Address(data[0],data[1],data[2],data[3]),
-                phoneNumber,email);
-
-        for(Contact c : book.getContacts())
-            if (c != null)
-            System.out.println(c.getPerson().getFirstName()+ " " +
-                    c.getPerson().getSecondName() + ", " );
-
-    }
-
-    static void editContact ()
-    {
-        String firstName;
-
-        System.out.println("Enter First name: ");
-        Scanner s = new Scanner(System.in);
-        firstName = s.nextLine();
-
-        for(Contact c : book.getContacts())
-            if (firstName == c.getPerson().getFirstName())
-            {
-                getDetails();
-            }
-
-    }
-
-    static void getDetails()
-    {
-        String firstName, lastName, address, email, phoneNumber;
-
+        String firstName, lastName, email, phoneNumber, address;
 
         System.out.println("Enter First name: ");
         Scanner s = new Scanner(System.in);
@@ -89,7 +55,7 @@ public class Programme {
 
         System.out.println("Enter your address: ");
         address = s.nextLine();
-        String[] data = address.split(",");
+        String[] data = address.split(", ");
 
         System.out.println("Enter phone number: ");
         phoneNumber = s.nextLine();
@@ -97,6 +63,39 @@ public class Programme {
         System.out.println("Enter email: ");
         email = s.nextLine();
 
+        Contact temp = new Contact(new Person(firstName,lastName),
+                new Address(data[0],data[1],data[2],data[3]), phoneNumber, email);
+
+        return temp;
     }
 
+    static void getDetails(Contact contact)
+    {
+
+        book.addNewContact(contact);
+
+        for(Contact c : book.getContacts())
+            if (c != null)
+            System.out.println(c.getPerson().getFirstName()+ " " +
+                    c.getPerson().getSecondName());
+
+    }
+
+    static void editContact ()
+    {
+        String firstName, lastName, email, phoneNumber, address;
+
+        System.out.println("Enter contact First Name: ");
+        Scanner s = new Scanner(System.in);
+        firstName = s.nextLine();
+
+        for(int i = 0; i < book.getContacts().length -1; i++)
+        {
+            if(book.getContacts()[i].getPerson().getFirstName()
+                        .compareToIgnoreCase(firstName) > 0)
+            {
+                book.getContacts()[i] = inputScreen();
+            }
+        }
+    }
 }
