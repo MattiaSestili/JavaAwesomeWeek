@@ -145,7 +145,6 @@ public class ProductGUI extends JFrame{
         description.setText(bb.get(countIndex).getDescription());
         price.setText( String.valueOf( bb.get(countIndex).getPrice()));
         category.setText( bb.get(countIndex).getCategory());
-        countIndex++;();
 
         if (countIndex < 0){
 
