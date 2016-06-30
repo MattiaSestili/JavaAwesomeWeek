@@ -140,15 +140,17 @@ public class ProductGUI extends JFrame{
 
     public void backButton ()
     {
-            countIndex --;
+        countIndex --;
+        model.setText( bb.get(countIndex).getModel());
+        description.setText(bb.get(countIndex).getDescription());
+        price.setText( String.valueOf( bb.get(countIndex).getPrice()));
+        category.setText( bb.get(countIndex).getCategory());
+        countIndex++;();
 
-            if (countIndex < 0){
+        if (countIndex < 0){
 
-                countIndex = bb.size();
-            }
-        loadButton();
-
-
+            countIndex = bb.size();
+        }
     }
 
     public void implementDb() throws Exception
